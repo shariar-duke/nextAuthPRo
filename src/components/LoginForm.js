@@ -1,6 +1,10 @@
+import { doSocialLogin } from "@/app/actions";
 export default function LoginForm() {
   return (
-    <form className="flex flex-col space-y-4 items-center">
+    <form
+      action={doSocialLogin}
+      className="flex flex-col space-y-4 items-center"
+    >
       <button
         className="bg-gradient-to-r from-pink-500 to-pink-700 text-white p-3 rounded-lg shadow-md hover:scale-105 transform transition-all duration-300 w-64 text-lg font-semibold focus:outline-none focus:ring-2 focus:ring-pink-300"
         type="submit"
