@@ -1,3 +1,4 @@
+import Logout from "@/components/Logout";
 import Image from "next/image";
 import { redirect } from "next/navigation";
 import { auth } from "../../../auth";
@@ -19,6 +20,8 @@ export default async function Page() {
         src={session?.user?.image || "/default-avatar.png"} // Use a default image if session?.user?.image is not available
         alt={session?.user?.name}
       />
+
+      <Logout />
     </div>
   );
 }
