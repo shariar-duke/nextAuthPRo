@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { redirect } from "next/navigation"; // Corrected import
+import { redirect } from "next/navigation";
 import { auth } from "../../../auth";
 
 export default async function Page() {
