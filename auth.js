@@ -23,6 +23,4 @@ export const {
     }),
     GithubProvider({}),
   ],
-
-  secret: process.env.AUTH_SECRET,
 });
