@@ -1,9 +1,25 @@
+"use client";
+import { doCradentialLogin } from "@/app/actions";
+import { useRouter } from "next/navigation";
 import SocialLogin from "./SocialLogin";
-
 export default function LoginForm() {
+  const router = useRouter();
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    try {
+      const formData = new FormData(event.currentTarget);
+      const response = await doCradentialLogin(formData);
+      if (response.error) {
+      } else {
+        router.push("/home");
+      }
+    } catch (err) {}
+  };
+
   return (
     <div className="max-w-md mx-auto p-4 border border-gray-300 rounded-lg shadow-md">
-      <form className="space-y-4">
+      <form onSubmit={handleSubmit} className="space-y-4">
         <div>
           <label
             htmlFor="email"
