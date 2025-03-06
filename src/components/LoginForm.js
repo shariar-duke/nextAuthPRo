@@ -1,20 +1,29 @@
 "use client";
 import { doCradentialLogin } from "@/app/actions";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 import SocialLogin from "./SocialLogin";
+
 export default function LoginForm() {
   const router = useRouter();
+  const [error, setError] = useState("");
+
   const handleSubmit = async (event) => {
     event.preventDefault();
+    setError(""); // Reset any previous errors
 
     try {
       const formData = new FormData(event.currentTarget);
       const response = await doCradentialLogin(formData);
-      if (response.error) {
+
+      if (response?.error) {
+        setError(response.error); // Set the error if it exists
       } else {
         router.push("/home");
       }
-    } catch (err) {}
+    } catch (err) {
+      setError("An unexpected error occurred. Please try again.");
+    }
   };
 
   return (
@@ -53,6 +62,12 @@ export default function LoginForm() {
             className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
           />
         </div>
+
+        {error && (
+          <div className="text-red-500 text-sm mt-2">
+            {error} {/* Display error message here */}
+          </div>
+        )}
 
         <div>
           <button
