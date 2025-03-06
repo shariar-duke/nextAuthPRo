@@ -1,5 +1,37 @@
+"use client";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 export default function RegisterPage() {
+  const router = useRouter();
+  async function handleSubmit(event) {
+    event.preventDefault();
+    try {
+      const formData = new FormData(event.currentTarget);
+      const name = formData.get("name");
+      const email = formData.get("email");
+      const password = formData.get("password");
+
+      console.log("The name is", name);
+      console.log("the email is", email);
+      console.log("the pasword is", password);
+
+      const response = await fetch(`/api/register`, {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify({
+          name,
+          email,
+          password,
+        }),
+      });
+
+      response.status === 201 && router.push("/");
+    } catch (e) {
+      console.error(e);
+    }
+  }
   return (
     <div className="flex min-h-screen items-center justify-center bg-gray-100 px-4">
       <div className="max-w-md w-full bg-white p-8 rounded-lg shadow-lg">
@@ -7,7 +39,7 @@ export default function RegisterPage() {
           Create an Account
         </h2>
 
-        <form className="space-y-5">
+        <form onSubmit={handleSubmit} className="space-y-5">
           {/* Name Field */}
           <div>
             <label
@@ -65,7 +97,7 @@ export default function RegisterPage() {
           {/* Register Button */}
           <div>
             <button
-              type="button"
+              type="submit"
               className="w-full py-3 bg-blue-500 text-white text-lg font-semibold rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300"
             >
               Register
