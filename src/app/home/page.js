@@ -12,14 +12,21 @@ export default async function Page() {
 
   return (
     <div className="flex flex-col items-center m-4">
-      <h1 className="text-3xl my-2">{session?.user?.name}</h1>
-      <Image
-        className="rounded-full"
-        height={72}
-        width={72}
-        src={session?.user?.image || "/default-avatar.png"} // Use a default image if session?.user?.image is not available
-        alt={session?.user?.name}
-      />
+      {session?.user?.image && session?.user?.name ? (
+        <div>
+          {" "}
+          <h1 className="text-3xl my-2">{session?.user?.name}</h1>
+          <Image
+            className="rounded-full"
+            height={72}
+            width={72}
+            src={session?.user?.image || "/default-avatar.png"} // Use a default image if session?.user?.image is not available
+            alt={session?.user?.name}
+          />
+        </div>
+      ) : (
+        <h1 className="text-3xl my-2">{session?.user?.email}</h1>
+      )}
 
       <Logout />
     </div>
