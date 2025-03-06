@@ -1,4 +1,6 @@
+import { getUserByEmail } from "@/data/users";
 import NextAuth from "next-auth";
+import CredentialsProvider from "next-auth/providers/credentials";
 import GithubProvider from "next-auth/providers/github";
 import GoogleProvider from "next-auth/providers/google";
 
@@ -8,6 +10,9 @@ export const {
   signIn,
   signOut,
 } = NextAuth({
+  session: {
+    strategy: "jwt",
+  },
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID,
@@ -31,6 +36,26 @@ export const {
           access_type: "offline",
           response_type: "code",
         },
+      },
+    }),
+
+    CredentialsProvider({
+      async authorize(credentials) {
+        if (credentials === null) return null;
+        try {
+          const user = getUserByEmail(credentials.email);
+          if (user) {
+            // match the password
+            const isMatch = user?.password === credentials.password;
+            if (isMatch) {
+              return user;
+            } else {
+              throw new Error("Invalid Cradentials");
+            }
+          } else {
+            throw new Error("User not found");
+          }
+        } catch (err) {}
       },
     }),
   ],
