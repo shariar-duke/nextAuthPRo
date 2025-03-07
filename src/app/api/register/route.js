@@ -1,4 +1,4 @@
-import { dbConnect } from "@/lib/mongo.";
+import { dbConnect } from "@/lib/mongo";
 import { createUser } from "@/queries/users";
 import bcrypt from "bcryptjs";
 import { NextResponse } from "next/server";
