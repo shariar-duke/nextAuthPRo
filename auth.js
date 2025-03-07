@@ -1,4 +1,5 @@
-import { getUserByEmail } from "@/data/users";
+import { User } from "@/model/user-model";
+import bcrypt from "bcryptjs";
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GithubProvider from "next-auth/providers/github";
@@ -43,10 +44,13 @@ export const {
       async authorize(credentials) {
         if (credentials === null) return null;
         try {
-          const user = getUserByEmail(credentials.email);
+          const user = await User.findOne({ email: credentials?.email });
           if (user) {
             // match the password
-            const isMatch = user?.password === credentials.password;
+            const isMatch = await bcrypt.compare(
+              credentials.password,
+              user.password
+            );
             if (isMatch) {
               return user;
             } else {
