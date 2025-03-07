@@ -1,6 +1,6 @@
-import { auth } from "@/auth";
 import Image from "next/image";
 import Link from "next/link";
+import { auth } from "../../auth";
 import Logout from "./Logout";
 
 import { CircleUserRound } from "lucide-react";
