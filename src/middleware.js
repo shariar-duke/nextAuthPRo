@@ -1,9 +1,9 @@
 import { NextResponse } from "next/server";
 
 export function middleware(request) {
-  return NextResponse.redirect(new URL("/products/1/checkout", request.url));
+  return NextResponse.redirect(new URL("/", request.url));
 }
 
 export const config = {
-  matcher: ["/products", "/dashboard"],
+  matcher: "/api/:path*",
 };
