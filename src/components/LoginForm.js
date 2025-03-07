@@ -20,7 +20,7 @@ export default function LoginForm() {
       if (response?.error) {
         setError(response.error); // Set the error if it exists
       } else {
-        router.push("/home");
+        router.push("/product");
       }
     } catch (err) {
       setError("An unexpected error occurred. Please try again.");
