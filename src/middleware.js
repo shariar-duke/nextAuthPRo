@@ -1,6 +1,6 @@
 import NextAuth from "next-auth";
 import { authConfig } from "./auth.config";
-import { LOGIN, PUBLIC_ROUTES, ROOT } from "./lib/rotue";
+import { LOGIN, PROTECTED_SUB_ROUTES, PUBLIC_ROUTES, ROOT } from "./lib/rotue";
 
 const { auth } = NextAuth(authConfig);
 
@@ -15,8 +15,9 @@ export async function middleware(request) {
   console.log(isAuthenticated, nextUrl.pathname);
 
   const isPublicRoute =
-    PUBLIC_ROUTES.find((route) => nextUrl.pathname.startsWith(route)) ||
-    nextUrl.pathname === ROOT;
+    (PUBLIC_ROUTES.find((route) => nextUrl.pathname.startsWith(route)) ||
+      nextUrl.pathname === ROOT) &&
+    !PROTECTED_SUB_ROUTES.find((route) => nextUrl.pathname.includes(route));
 
   console.log(isPublicRoute);
 
