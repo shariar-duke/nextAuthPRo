@@ -1,6 +1,7 @@
 import { getProductById } from "@/data/products";
 import Link from "next/link";
-const ProductDetailsPage = ({ params: { id } }) => {
+const ProductDetailsPage = async ({ params }) => {
+  const { id } = await params;
   const product = getProductById(id);
   return (
     <div className="flex flex-col justify-center items-center p-8">

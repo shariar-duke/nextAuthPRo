@@ -20,7 +20,7 @@ export const metadata = {
 
 export default async function RootLayout({ children }) {
   const connection = await dbConnect();
-  console.log("My mongo conection is", connection);
+
   return (
     <html lang="en">
       <body
